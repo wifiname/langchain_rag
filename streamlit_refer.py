@@ -80,7 +80,7 @@ def main():
 
                 st.markdown(response)
                 with st.expander("참고 문서 확인"):
-                    for i in range(0, len(source_documents)-1):
+                    for i in range(0, len(source_documents)):
                         st.markdown(source_documents[i].metadata['source'], help = source_documents[i].page_content)
 
 # Add assistant message to chat history
