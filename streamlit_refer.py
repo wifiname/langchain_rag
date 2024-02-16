@@ -139,8 +139,8 @@ def get_conversation_chain(vetorestore,openai_api_key):
     conversation_chain = ConversationalRetrievalChain.from_llm(
             llm=llm, 
             chain_type="stuff", 
-            #retriever=vetorestore.as_retriever(search_type = 'mmr', vervose = True), 
-            retriever=vetorestore.as_retriever(search_type="similarity_score_threshold", search_kwargs={"score_threshold": 0.8}),
+            retriever=vetorestore.as_retriever(search_type = 'mmr', vervose = True), 
+            #retriever=vetorestore.as_retriever(search_type="similarity_score_threshold", search_kwargs={"score_threshold": 0.8}),
             #retriever=vetorestore.as_retriever(search_kwargs={"k": 1}),
             memory=ConversationBufferMemory(memory_key='chat_history', return_messages=True, output_key='answer'),
             get_chat_history=lambda h: h,
