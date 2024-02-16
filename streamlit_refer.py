@@ -134,14 +134,14 @@ def get_vectorstore(text_chunks):
     return vectordb
 
 def get_conversation_chain(vetorestore,openai_api_key):
-    #llm = ChatOpenAI(openai_api_key=openai_api_key, model_name = 'gpt-3.5-turbo',temperature=0)
-    llm = ChatOpenAI(openai_api_key=openai_api_key, model_name = 'gpt-4-turbo-preview',temperature=0)
+    llm = ChatOpenAI(openai_api_key=openai_api_key, model_name = 'gpt-3.5-turbo',temperature=0)
+    #llm = ChatOpenAI(openai_api_key=openai_api_key, model_name = 'gpt-4-turbo-preview',temperature=0)
     conversation_chain = ConversationalRetrievalChain.from_llm(
             llm=llm, 
             chain_type="stuff", 
             #retriever=vetorestore.as_retriever(search_type = 'mmr', vervose = True), 
-            #retriever=vetorestore.as_retriever(search_type="similarity_score_threshold", search_kwargs={"score_threshold": 0.5}),
-            retriever=vetorestore.as_retriever(search_kwargs={"k": 1}),
+            retriever=vetorestore.as_retriever(search_type="similarity_score_threshold", search_kwargs={"score_threshold": 0.8}),
+            #retriever=vetorestore.as_retriever(search_kwargs={"k": 1}),
             memory=ConversationBufferMemory(memory_key='chat_history', return_messages=True, output_key='answer'),
             get_chat_history=lambda h: h,
             return_source_documents=True,
