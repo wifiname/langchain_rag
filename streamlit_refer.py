@@ -111,7 +111,7 @@ def get_text(docs):
             loader = UnstructuredPowerPointLoader(file_name)
             documents = loader.load_and_split()
         elif '.csv' in doc.name:
-            loader = CSVLoader(file_name, source_column="질문")
+            loader = CSVLoader(file_path=file_name, source_column="질문")
             documents = loader.load_and_split()
         doc_list.extend(documents)
     return doc_list
