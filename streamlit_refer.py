@@ -98,7 +98,7 @@ def get_text(docs):
     
     for doc in docs:
         file_name = doc.name  # doc 객체의 이름을 파일 이름으로 사용
-        with open(file_name, "wb", encoding='utf8') as file:  # 파일을 doc.name으로 저장
+        with open(file_name, "wb") as file:  # 파일을 doc.name으로 저장
             file.write(doc.getvalue())
             logger.info(f"Uploaded {file_name}")
         if '.pdf' in doc.name:
