@@ -8,6 +8,7 @@ from langchain.chat_models import ChatOpenAI
 from langchain.document_loaders import PyPDFLoader
 from langchain.document_loaders import Docx2txtLoader
 from langchain.document_loaders import UnstructuredPowerPointLoader
+from langchain.document_loaders import CSVLoader
 
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.embeddings import HuggingFaceEmbeddings
@@ -36,7 +37,7 @@ def main():
         st.session_state.processComplete = None
 
     with st.sidebar:
-        uploaded_files =  st.file_uploader("Upload your file",type=['pdf','docx'],accept_multiple_files=True)
+        uploaded_files =  st.file_uploader("Upload your file",type=['pdf','docx','csv'],accept_multiple_files=True)
         openai_api_key = st.text_input("OpenAI API Key", key="chatbot_api_key", type="password")
         process = st.button("Process")
     if process:
@@ -109,7 +110,9 @@ def get_text(docs):
         elif '.pptx' in doc.name:
             loader = UnstructuredPowerPointLoader(file_name)
             documents = loader.load_and_split()
-
+        elif '.csv' in doc.name:
+            loader = CSVLoader(file_name, source_column="질문")
+            documents = loader.load_and_split()
         doc_list.extend(documents)
     return doc_list
 
@@ -139,7 +142,7 @@ def get_conversation_chain(vetorestore,openai_api_key):
     conversation_chain = ConversationalRetrievalChain.from_llm(
             llm=llm, 
             chain_type="stuff", 
-            retriever=vetorestore.as_retriever(search_type = 'mmr', vervose = True), 
+            retriever=vetorestore.as_retriever(search_type = 'mmr', vervose = True, search_kwargs={"k": 3}), 
             #retriever=vetorestore.as_retriever(search_type="similarity_score_threshold", search_kwargs={"score_threshold": 0.8}),
             #retriever=vetorestore.as_retriever(search_kwargs={"k": 1}),
             memory=ConversationBufferMemory(memory_key='chat_history', return_messages=True, output_key='answer'),
