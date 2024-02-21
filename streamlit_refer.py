@@ -98,7 +98,7 @@ def get_text(docs):
     
     for doc in docs:
         file_name = doc.name  # doc 객체의 이름을 파일 이름으로 사용
-        with open(file_name, "w", encoding="euc-kr") as file:  # 파일을 doc.name으로 저장
+        with open(file_name, "wb") as file:  # 파일을 doc.name으로 저장
             file.write(doc.getvalue())
             logger.info(f"Uploaded {file_name}")
         if '.pdf' in doc.name:
@@ -111,7 +111,7 @@ def get_text(docs):
             loader = UnstructuredPowerPointLoader(file_name)
             documents = loader.load_and_split()
         elif '.csv' in doc.name:
-            loader = CSVLoader(file_path="./전처리_QnA_CSV.csv", source_column="질문")
+            loader = CSVLoader(file_name, source_column="질문")
             documents = loader.load_and_split()
         doc_list.extend(documents)
 
