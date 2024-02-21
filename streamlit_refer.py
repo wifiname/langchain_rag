@@ -114,6 +114,8 @@ def get_text(docs):
             loader = CSVLoader(file_path="./전처리_QnA_CSV.csv", source_column="질문")
             documents = loader.load_and_split()
         doc_list.extend(documents)
+
+    logger.info(f"End get_text")
     return doc_list
 
 
@@ -124,6 +126,7 @@ def get_text_chunks(text):
         length_function=tiktoken_len
     )
     chunks = text_splitter.split_documents(text)
+    logger.info(f"End get_text_chunks")
     return chunks
 
 
@@ -134,6 +137,7 @@ def get_vectorstore(text_chunks):
                                         encode_kwargs={'normalize_embeddings': True}
                                         )  
     vectordb = FAISS.from_documents(text_chunks, embeddings)
+    logger.info(f"End get_vectorstore")
     return vectordb
 
 def get_conversation_chain(vetorestore,openai_api_key):
@@ -151,6 +155,7 @@ def get_conversation_chain(vetorestore,openai_api_key):
             verbose = True
         )
 
+    logger.info(f"End get_conversation_chain")
     return conversation_chain
 
 
