@@ -116,7 +116,7 @@ def get_text(docs):
 
             # main() 사용
             file_path=os.path.realpath(__file__)+file_name
-            save_uploaded_file('data', file_name)
+            save_uploaded_file('data', doc)
             
             logger.info("Uploaded" + file_path)
         if '.pdf' in doc.name:
