@@ -109,7 +109,7 @@ def get_text(docs):
     doc_list = []
     
     for doc in docs:
-        file_path=os.getcwd()+"/"+file_name
+        file_path=os.getcwd()+"/"+doc.name
         #with open(file_name, "wb") as file:  # 파일을 doc.name으로 저장
             #file.write(doc.getvalue())
 
