@@ -128,8 +128,8 @@ def get_text(docs):
             documents = loader.load_and_split()
         elif '.csv' in doc.name:
             loader = CSVLoader(file_path=file_path, encoding="utf-8", source_column="질문")
-            documents = loader.load()
-            #documents = loader.load_and_split()
+            #documents = loader.load()
+            documents = loader.load_and_split()
         doc_list.extend(documents)
 
     logger.info(f"End get_text")
