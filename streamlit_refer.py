@@ -97,6 +97,7 @@ def save_uploaded_file(doc):
 
     file_path=os.getcwd()+"/"+file_name
     return st.success('파일 업로드 성공')
+    
   
 
 def tiktoken_len(text):
@@ -110,6 +111,7 @@ def get_text(docs):
     
     for doc in docs:
         file_path=os.getcwd()+"/"+doc.name
+        file_name=doc.name
         #with open(file_name, "wb") as file:  # 파일을 doc.name으로 저장
             #file.write(doc.getvalue())
 
