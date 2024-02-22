@@ -92,7 +92,7 @@ def main():
 # 파일 업로드 함수
 def save_uploaded_file(doc):
     file_name = doc.name  # doc 객체의 이름을 파일 이름으로 사용
-    with open(file.name, 'wb') as f:
+    with open(file_name, 'wb') as f:
         f.write(file.getvalue())
 
     file_path=os.getcwd()+"/"+file_name
