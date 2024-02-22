@@ -93,7 +93,7 @@ def main():
 def save_uploaded_file(doc):
     file_name = doc.name  # doc 객체의 이름을 파일 이름으로 사용
     with open(file_name, 'wb') as f:
-        f.write(file.getvalue())
+        f.write(doc.getvalue())
 
     file_path=os.getcwd()+"/"+file_name
     return st.success('파일 업로드 성공')
