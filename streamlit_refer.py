@@ -90,13 +90,12 @@ def main():
         st.session_state.messages.append({"role": "assistant", "content": response})
 
 # 파일 업로드 함수
-def save_uploaded_file(directory, file):
-    if not os.path.exists(directory): # 해당 이름의 폴더가 존재하는지 여부 확인
-        os.makedirs(directory) # 폴더가 없다면 폴더를 생성한다.
-        
-    with open(os.path.join(directory, file.name), 'wb') as f:
-        f.write(file.getbuffer()) # 해당 내용은 Buffer로 작성하겠다.
-    
+def save_uploaded_file(doc):
+    file_name = doc.name  # doc 객체의 이름을 파일 이름으로 사용
+    with open(file.name, 'wb') as f:
+        f.write(file.getvalue())
+
+    file_path=os.getcwd()+"/"+file_name
     return st.success('파일 업로드 성공')
   
 
@@ -110,14 +109,12 @@ def get_text(docs):
     doc_list = []
     
     for doc in docs:
-        file_name = doc.name  # doc 객체의 이름을 파일 이름으로 사용
-        with open(file_name, "wb") as file:  # 파일을 doc.name으로 저장
+        file_path=os.getcwd()+"/"+file_name
+        #with open(file_name, "wb") as file:  # 파일을 doc.name으로 저장
             #file.write(doc.getvalue())
 
-            file_path=os.getcwd()+"/"+file_name
-            save_uploaded_file('data', doc)
+        save_uploaded_file(doc)
             
-            logger.info("Uploaded : " + file_path)
         if '.pdf' in doc.name:
             loader = PyPDFLoader(file_name)
             documents = loader.load_and_split()
