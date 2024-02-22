@@ -92,7 +92,7 @@ def main():
 # 파일 업로드 함수
 def save_uploaded_file(directory, file):
     if not os.path.exists(directory): # 해당 이름의 폴더가 존재하는지 여부 확인
-	os.makedirs(directory) # 폴더가 없다면 폴더를 생성한다.
+        os.makedirs(directory) # 폴더가 없다면 폴더를 생성한다.
     with open(os.path.join(directory, file.name) 'wb) as f: #해당 경로의 폴더에서 파일의 이름으로 생성하겠다.
     	f.write(file.getbuffer()) # 해당 내용은 Buffer로 작성하겠다.
       	# 기본적으로 이미즈는 buffer로 저장되고 출력할때도 buffer로 출력한다.
