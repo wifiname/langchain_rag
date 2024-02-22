@@ -1,3 +1,4 @@
+import os
 import streamlit as st
 import tiktoken
 from loguru import logger
@@ -88,6 +89,17 @@ def main():
 # Add assistant message to chat history
         st.session_state.messages.append({"role": "assistant", "content": response})
 
+# 파일 업로드 함수
+def save_uploaded_file(directory, file):
+	if not os.path.exists(directory): # 해당 이름의 폴더가 존재하는지 여부 확인
+  	of.makedirs(directory) # 폴더가 없다면 폴더를 생성한다.
+      
+  with open(os.path.join(directory, file.name) 'wb) as f: #해당 경로의 폴더에서 파일의 이름으로 생성하겠다.
+  	f.write(file.getbuffer()) # 해당 내용은 Buffer로 작성하겠다.
+      	# 기본적으로 이미즈는 buffer로 저장되고 출력할때도 buffer로 출력한다.
+  return st.success('파일 업로드 성공')
+  
+
 def tiktoken_len(text):
     tokenizer = tiktoken.get_encoding("cl100k_base")
     tokens = tokenizer.encode(text)
@@ -100,8 +112,13 @@ def get_text(docs):
     for doc in docs:
         file_name = doc.name  # doc 객체의 이름을 파일 이름으로 사용
         with open(file_name, "wb") as file:  # 파일을 doc.name으로 저장
-            file.write(doc.getvalue())
-            logger.info(f"Uploaded {file_name}")
+            #file.write(doc.getvalue())
+
+            # main() 사용
+            file_path=os.path.realpath(__file__)+file_name
+            save_uploaded_file('data', file_name)
+            
+            logger.info("Uploaded" + file_path)
         if '.pdf' in doc.name:
             loader = PyPDFLoader(file_name)
             documents = loader.load_and_split()
@@ -112,7 +129,8 @@ def get_text(docs):
             loader = UnstructuredPowerPointLoader(file_name)
             documents = loader.load_and_split()
         elif '.csv' in doc.name:
-            loader = CSVLoader(file_path="./data/전처리_QnA_CSV.csv", encoding="utf-8", source_column="질문")
+            file_path=os.path.realpath(__file__)+file_name
+            loader = CSVLoader(file_path=file_path, encoding="utf-8", source_column="질문")
             documents = loader.load_and_split()
         doc_list.extend(documents)
 
