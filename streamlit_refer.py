@@ -115,10 +115,10 @@ def get_text(docs):
             #file.write(doc.getvalue())
 
             # main() 사용
-            file_path=os.path.realpath(__file__)+file_name
+            file_path=getcwd()+"/"+file_name
             save_uploaded_file('data', doc)
             
-            logger.info("Uploaded" + file_path)
+            logger.info("Uploaded : " + file_path)
         if '.pdf' in doc.name:
             loader = PyPDFLoader(file_name)
             documents = loader.load_and_split()
@@ -129,7 +129,6 @@ def get_text(docs):
             loader = UnstructuredPowerPointLoader(file_name)
             documents = loader.load_and_split()
         elif '.csv' in doc.name:
-            file_path=os.path.realpath(__file__)+file_name
             loader = CSVLoader(file_path=file_path, encoding="utf-8", source_column="질문")
             documents = loader.load_and_split()
         doc_list.extend(documents)
