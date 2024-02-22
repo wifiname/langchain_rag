@@ -114,8 +114,7 @@ def get_text(docs):
         with open(file_name, "wb") as file:  # 파일을 doc.name으로 저장
             #file.write(doc.getvalue())
 
-            # main() 사용
-            file_path=getcwd()+"/"+file_name
+            file_path=os.getcwd()+"/"+file_name
             save_uploaded_file('data', doc)
             
             logger.info("Uploaded : " + file_path)
