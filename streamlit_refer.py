@@ -166,7 +166,7 @@ def get_conversation_chain(vetorestore,openai_api_key):
             retriever=vetorestore.as_retriever(search_type = 'mmr', vervose = True, search_kwargs={"k": 3}), 
             #retriever=vetorestore.as_retriever(search_type="similarity_score_threshold", search_kwargs={"score_threshold": 0.8}),
             #retriever=vetorestore.as_retriever(search_kwargs={"k": 1}),
-            memory=ConversationBufferMemory(memory_key='chat_history', return_messages=True, output_key='answer'),
+            memory=ConversationBufferMemory(memory_key='chat_history', k=0, return_messages=True, output_key='answer'),
             get_chat_history=lambda h: h,
             return_source_documents=True,
             verbose = True
